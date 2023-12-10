@@ -60,7 +60,7 @@ public class kongaProject {
         //sign in to google
         driver.findElement(By.id("identifierId")).sendKeys("muyiwaakintayo66@gmail.com");
         driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/div/button/span")).click();
-        driver.findElement(By.xpath("//*[@id=\"password\"]/div[1]/div/div[1]/input")).sendKeys("MeticulouS1");
+        driver.findElement(By.xpath("//*[@id=\"password\"]/div[1]/div/div[1]/input")).sendKeys("************");
         driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/div/button/span")).click();
         //wait for it to load completely
         Thread.sleep(5000);
