@@ -1,9 +1,15 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.awt.*;
 
 public class kongaProject {
     private WebDriver driver;
@@ -28,70 +34,66 @@ public class kongaProject {
 
 
     @Test (priority = 0)
-    // Sign in to KongaSuccessfully-
-    //unsuccessful Login with Email
-    public void negLogin() throws InterruptedException {
+    // Sign in to Konga Successfully-
+
+    public void Login() throws InterruptedException {
         //Click on login button
         driver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[1]/div/div/div[4]/a")).click();
         //verify the username textbox has the appropriate placeholder
-        // Verify user can see the test "please fill in your username" when hovering on the textbox
+
+        // Find the username input element
+        WebElement usernameInput = driver.findElement(By.name("username"));
+
+        // Get the placeholder attribute value
+        String usernameplaceholderText = usernameInput.getAttribute("placeholder");
+
+        // Assert if the placeholder text matches the expected value
+        String usernameExpectedPlaceholder = "Enter Email Address OR Phone Number";
+        Assert.assertEquals(usernameplaceholderText, usernameExpectedPlaceholder);
+
         //input Email address
-        driver.findElement(By.name("username")).sendKeys("aedwergfer@yahoo.com");
+        driver.findElement(By.name("username")).sendKeys("adebola.oritu@yahoo.com");
         //verify the password textbox has the appropriate placeholder
+
+        // Find the password input element
+        WebElement passwordInput = driver.findElement(By.name("password"));
+
+        // Get the placeholder attribute value
+        String placeholderText = passwordInput.getAttribute("placeholder");
+
+        // Assert if the placeholder text matches the expected value
+        String expectedPlaceholder = "Enter Password";
+        Assert.assertEquals(placeholderText, expectedPlaceholder);
+
         // Verify user can see the test "please fill in your password" when hovering on the textbox
         //input password
-        driver.findElement(By.name("password")).sendKeys("acbdefrg");
-        //Verify that password is encrypted while typing
+        passwordInput.sendKeys("Meticulous1");
         //Click on login button
         driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[4]/section/section/aside/div[2]/div/form/div[3]/button")).click();
-        //wait for it to load completely
-        //Verify error messages //*[@id="app-content-wrapper"]/div[4]/section/section/aside/div[2]/div/form/div[1]/div
-        //verify user is  not logged in
-        driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[4]/section/section/aside/div[1]/div/a/span")).click();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
+
     }
-    @Test (priority = 1)
-    //successful login with Google
-    public void posLogin () throws InterruptedException {
-        //Click on login button
-        driver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[1]/div/div/div[4]/a")).click();
-        //Click on login with google button
-        driver.findElement(By.id("google_container")).click();
-        //sign in to google
-        driver.findElement(By.id("identifierId")).sendKeys("muyiwaakintayo66@gmail.com");
-        driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/div/button/span")).click();
-        driver.findElement(By.xpath("//*[@id=\"password\"]/div[1]/div/div[1]/input")).sendKeys("MeticulouS1");
-        driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/div/button/span")).click();
+
+
+
+    @Test (priority =1)
+    // From the Categories, click on the “Computers and Accessories”-
+    public void ClickOnComputersNaccessories() throws InterruptedException {
+        //click on Computers and Accessories
+        driver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[2]/div/a[2]")).click();
         //wait for it to load completely
         Thread.sleep(5000);
-        //verify that user is logged in
 
     }
     @Test (priority = 2)
-    // From the Categories, click on the “Computers and Accessories”-
-    public void ClickOnComputersNaccessories() throws InterruptedException {
-        //Click on catergories
-        driver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[2]/div/a[1]")).click();
-        //click on Computers and Accessories
-        driver.findElement(By.xpath("//*[@id=\"subFixId\"]/div/div[1]/ul/li[1]/a")).click();
-        //wait for it to load completely
-        Thread.sleep(5000);
-
-    }
-    @Test (priority = 3)
     // Click on the Laptop SubCategory-
     public void ClickOnLaptopSubCategory() throws InterruptedException {
         //click on laptop
         driver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/div/section/div[2]/div[2]/ul/li[4]/a/label/span")).click();
-        //Verify the checkbox to choose the differnt typre pf laptop is displayed
-        //verify that user can choose more tghan one type of laptop
-        //verify that usr can click on the arrow back button to close the subcatergory
-        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/div/section/div[2]/div[2]/ul/li[4]/a/svg/path")).click();
-        //Verify the title of the page
         //wait for it to load completely
         Thread.sleep(5000);
     }
-    @Test (priority = 4)
+    @Test (priority = 3)
     // Click on the Apple MacBooks-
 
     public void clickOnMacbooks() throws InterruptedException {
@@ -103,7 +105,7 @@ public class kongaProject {
 
     }
 
-    @Test (priority = 5)
+    @Test (priority = 4)
     // Add an item to the cart-
     public void Addtocart() throws InterruptedException {
         //addfirstitemtocart
@@ -116,31 +118,25 @@ public class kongaProject {
 
     }
 
-    @Test (priority = 6)
+    @Test (priority = 5)
     //Checkout
-    public void CheckOut() {
+    public void CheckOut() throws InterruptedException {
+        //view cart
+        driver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[1]/div/div/a[2]/span[1]")).click();
+
+        // click on checkout
+        driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[3]/section/section/aside/div[3]/div/div[2]/button")).click();
+
+        Thread.sleep(10000);
 
         //Printout the url https://www.konga.com/checkout/complete-order
         //verify the page title
-
-        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[2]/div[1]/div[2]/div[1]/div/button")).click();
-        //complete address form2
-        driver.findElement(By.name("firstname")).sendKeys("Adebola");
-        driver.findElement(By.name("lastname")).sendKeys("Testify");
-        driver.findElement(By.name("telephone")).sendKeys("08025437452");
-        driver.findElement(By.name("street")).sendKeys("Ibadan, Nigeria");
-        driver.findElement(By.name("city")).sendKeys("Ibadan");
-        driver.findElement(By.name("regionId")).sendKeys("Oyo");
-        driver.findElement(By.name("areaId")).sendKeys("Egbeda");
-        driver.findElement(By.name("saveDeliveryAddress")).click();
-        //Close address form.
-        driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[1]/div/a")).click();
-        //Verify success message <p class="_12da4_1baq-">New Delivery Address saved successfully!</p>
-    }
-
-    @Test (priority = 7)
+        //add delivery address
+        }
+    @Test (priority = 6)
     // Select Address-
-    public void selectAddress() {
+    public void ChooseAddress() throws InterruptedException {
+        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[1]/div[2]/div/button")).click();
 
         driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[2]/div[1]/div[2]/div[1]/div/button")).click();
         //select the first address
@@ -150,27 +146,55 @@ public class kongaProject {
 
         //click on use the address button
         driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[3]/div/div/div/a")).click();
+
+        Thread.sleep(2000);
+
+
     }
     @Test (priority = 8)
-    //Paymenttest
-    public void paymentTest() {
-        // continue to payment
-        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[1]/div[1]/span/input")).click();
-        driver.findElement(By.name("placeOrder")).click();
-        //Verify the floating page to select payment method is displayed- <section class="page-container"><section class="konga-pg-sdk"><div class="page-header"><a onclick="UIHelper.returnToMerchantPage()" href="javascript:void(0);">Return to merchant site</a></div><div class="data-card"><div class="data-card__header"><aside class="data-card__close" onclick="UIHelper.returnToMerchantPage()">×</aside><div class="header-top"><div class="header-top__logo"><img src="https://stkongapaysharedxftn.blob.core.windows.net/kongapay/logo/1551262859863-Konga%20Logo.png"></div></div><div class="header-bottom"><div class="header-bottom__reference">R993838110</div><div class="header-bottom__amount"><span class="discount-amt" id="discount-amount"></span><span class="original-amt-block"><span class="amt-parenthesis" style="display:none;">(</span><span class="original-amt" id="original-amount">₦3,341,445.00</span><span class="amt-parenthesis" style="display:none;">)</span></span></div></div></div><div id="card-progress" style="display:none;" class="data-card__progress-bar"><div id="progress" class="progress"><span id="outstanding" class="outstanding"><span id="naira-sign">₦</span><span id="outstanding-amount"></span> <span id="left">left</span></span></div></div><div class="content-part"><div id="channel-template"><div class="data-card__title"><span>SELECT PAYMENT METHOD</span></div><div class="data-card__content"><div class="dashboard-card-holder"><div class="dashboard-card">  <button onclick="UIHelper.loadTemplate('kongapay/form', null, {channel_id: '1', identifier: 'kongapay', name: 'KongaPay' })" class="dashboard-card__button KongaPay"><div class="payment-option-content"><span class="payment-option-name">KongaPay</span><span class="payment-option-info">Pay with your kongaPay Wallet</span><span class="payment-option-promo"></span></div><img src="/img/kpaybrand/kongapay-wallet-logo.png" class="payment-option_image retina"></button></div><div class="dashboard-card">  <button onclick="UIHelper.loadTemplate('transfer/form', null, {channel_id: '9', identifier: 'transfer', name: 'Bank Transfer' })" class="dashboard-card__button Bank Transfer"><div class="payment-option-content"><span class="payment-option-name">Bank Transfer</span><span class="payment-option-info">Make payments using bank transfer.</span><span class="payment-option-promo"></span></div><img src="/img/transfer-icon.svg" class="payment-option_image retina"></button></div><div class="dashboard-card">  <button onclick="UIHelper.loadTemplate('card/form', null, {channel_id: '2', identifier: 'chn_002_in3sw', name: 'Card', songbird_cardinal_js:'https://songbird.cardinalcommerce.com/cardinalcruise/v1/songbird.js'})" class="dashboard-card__button Card"><div class="payment-option-content"><span class="payment-option-name">Card</span><span class="payment-option-info">Make payments with your credit or debit card.</span><span class="payment-option-promo"></span></div><img src="/img/credit-card.svg" class="payment-option_image retina"></button></div></div></div></div><div class="ui-view"></div></div></div></section></section>
-        //Select Card
-        driver.findElement(By.xpath("//*[@id=\"channel-template\"]/div[2]/div/div[3]/button")).click();
-
-        // Input invalid card details-
-        driver.findElement(By.id("card-number")).sendKeys("5535 6788 7654 3210");
-
-        // Print Out the error message: Invalid card number-
-
-        // Close the iFrame that displays the input card Modal-
-        driver.findElement(By.xpath("/html/body/section/section/section/div[2]/div[1]/aside")).click();
-        //printout confirmation message
-
+    public void selectcardmethod () throws InterruptedException {
+        //9 select a card payment method
+        //9a change from default to iframe
+        //WebElement paymethod = driver.findElement(By.xpath("//*[@id=\"_hjSafeContext_99950728\"]"));
+        WebDriver frame;
+        frame = driver.switchTo().frame("kpg-frame-component");
+        Thread.sleep(7000);
+        //9b select card payment method
+        WebElement cardpayment = driver.findElement(By.className("Card"));
+        cardpayment.click();
+        System.out.println("select card method");
+        Thread.sleep(5000);
     }
+
+    @Test (priority = 9)
+    public void inputcarddetails () throws InterruptedException {
+        //10. input individual card details
+        //10a input card number in its field
+        driver.findElement(By.id("card-number")).sendKeys("123456789000");
+        Thread.sleep(3000);
+        //10b input date in its field
+        driver.findElement(By.id("expiry")).sendKeys("1224");
+        Thread.sleep(3000);
+        //10c input CVV in its field
+        driver.findElement(By.id("cvv")).sendKeys("456");
+        Thread.sleep(5000);
+        System.out.println("input card details");
+    }
+    @Test (priority = 10)
+    public void errormessage () throws InterruptedException {
+        //11 print out the error message
+        WebElement error = driver.findElement(By.id("card-number_unhappy"));
+        System.out.println(error.getText());
+        Thread.sleep(5000);
+    }
+    @Test (priority = 11)
+    public void closeframe () throws InterruptedException {
+        //12 close the Iframe that displays input card details
+        driver.findElement(By.className("data-card__close")).click();
+        System.out.println("exit iframe");
+        Thread.sleep(5000);
+    }
+
 
 
     @AfterTest
