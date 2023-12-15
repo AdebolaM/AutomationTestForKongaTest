@@ -3,8 +3,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -72,6 +70,14 @@ public class kongaProject {
         //Click on login button
         driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[4]/section/section/aside/div[2]/div/form/div[3]/button")).click();
         Thread.sleep(2000);
+        //confirm the user is logged in with the success message
+        WebElement successmessage = driver.findElement( By.xpath("//*[@id=\"app-content-wrapper\"]/div[1]"));
+        // Check if the element is displayed
+        if (successmessage.isDisplayed()) {
+            System.out.println("Login successful!");
+        } else {
+            System.out.println("Login not successful!.");
+        }
 
     }
 
@@ -84,6 +90,13 @@ public class kongaProject {
         driver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[2]/div/a[2]")).click();
         //wait for it to load completely
         Thread.sleep(5000);
+        //get and printout the url
+        // Get the current URL
+        String currentUrl = driver.getCurrentUrl();
+        // Print the current URL
+        System.out.println("Current URL: " + currentUrl);
+
+
 
     }
     @Test (priority = 2)
@@ -124,10 +137,12 @@ public class kongaProject {
     public void CheckOut() throws InterruptedException {
         //view cart
         driver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[1]/div/div/a[2]/span[1]")).click();
-
+        //verify item is in the Cart
+        WebElement Cartitem = driver.findElement(By.xpath("//*[@id=\"js-cart-items-wrapper\"]/div/div/div[1]"));
+        Cartitem.isDisplayed();
+        System.out.println("Item present!");
         // click on checkout
         driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[3]/section/section/aside/div[3]/div/div[2]/button")).click();
-
         Thread.sleep(10000);
 
         }
@@ -166,12 +181,12 @@ public class kongaProject {
     @Test  (priority = 7)
     //choose pay now
     public void PayNow () throws InterruptedException {
+        //click on paynow radio button
         driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[1]/div[1]/span/input")).click();
+        //Click on continue to payment
         driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[3]/div[2]/div/button")).click();
         Thread.sleep(10000);
     }
-
-
 
     @Test (priority = 8)
     public void selectcardmethod () throws InterruptedException {
