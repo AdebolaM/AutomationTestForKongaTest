@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -108,8 +109,8 @@ public class kongaProject {
     @Test (priority = 4)
     // Add an item to the cart-
     public void Addtocart() throws InterruptedException {
-        //addfirstitemtocart
-        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/section/section/section/ul/li[1]/div/div/div[2]/form/div[3]/button")).click();
+        //additemtocart
+        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/section/section/section/ul/li[10]/div/div/div[2]/form/div[3]/button")).click();
         //Verify successmessage xpath(//*[@id="app-content-wrapper"]/div[1]) undefined <p class="_12da4_1baq-">MacBook Pro M2 Pro chip wit... has been added to your cart</p>
         //wait for it to load completely
         Thread.sleep(2000);
@@ -129,36 +130,57 @@ public class kongaProject {
 
         Thread.sleep(10000);
 
-        //Printout the url https://www.konga.com/checkout/complete-order
-        //verify the page title
-        //add delivery address
         }
     @Test (priority = 6)
     // Select Address-
     public void ChooseAddress() throws InterruptedException {
-        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[1]/div[2]/div/button")).click();
+        try {
+            // Attempt to click the first button
+            WebElement firstButton =  driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[1]/div[2]/div/button"));
+            firstButton.click();
 
-        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[2]/div[1]/div[2]/div[1]/div/button")).click();
-        //select the first address
-        driver.findElement(By.name("selectDeliveryAddress")).click();
-        //verify the address is selected
-        // verify the use the address button appears
+            // Code to execute if the first button was clicked successfully
+            WebElement secondButton = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[2]/div[1]/div[2]/div[1]/div/button"));
+            secondButton.click();
+            driver.findElement(By.name("selectDeliveryAddress")).click();
+            Thread.sleep(2000);
+            //click on use the address button
+            WebElement addressButton = driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[3]/div/div/div/a"));
+            addressButton.click();
+            Thread.sleep(2000);
 
-        //click on use the address button
-        driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[3]/div/div/div/a")).click();
-
-        Thread.sleep(2000);
-
-
+        }
+        catch (NoSuchElementException e) {
+            // If the first button is not found, click the second button
+            WebElement secondButton = driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[2]/div[1]/div[2]/div[1]/div/button"));
+            secondButton.click();
+            //select the first address
+            driver.findElement(By.name("selectDeliveryAddress")).click();
+            //click on use the address button
+            WebElement addressButton = driver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[3]/div/div/div/a"));
+            addressButton.click();
+            Thread.sleep(2000);
+        }
     }
+
+    @Test  (priority = 7)
+    //choose pay now
+    public void PayNow () throws InterruptedException {
+        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[1]/div[1]/span/input")).click();
+        driver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[3]/div[2]/div/button")).click();
+        Thread.sleep(10000);
+    }
+
+
+
     @Test (priority = 8)
     public void selectcardmethod () throws InterruptedException {
         //9 select a card payment method
         //9a change from default to iframe
-        //WebElement paymethod = driver.findElement(By.xpath("//*[@id=\"_hjSafeContext_99950728\"]"));
+        WebElement paymethod;
+        paymethod = driver.findElement(By.id("kpg-frame-component"));
         WebDriver frame;
         frame = driver.switchTo().frame("kpg-frame-component");
-        Thread.sleep(7000);
         //9b select card payment method
         WebElement cardpayment = driver.findElement(By.className("Card"));
         cardpayment.click();
@@ -170,7 +192,7 @@ public class kongaProject {
     public void inputcarddetails () throws InterruptedException {
         //10. input individual card details
         //10a input card number in its field
-        driver.findElement(By.id("card-number")).sendKeys("123456789000");
+        driver.findElement(By.id("card-number")).sendKeys("1234567890006532");
         Thread.sleep(3000);
         //10b input date in its field
         driver.findElement(By.id("expiry")).sendKeys("1224");
